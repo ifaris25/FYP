@@ -9,8 +9,15 @@
                 <span class="brand-text">مِدَاد</span>
             </div>
 
-            <!-- Vertical line -->
-            <span class="vertical-line"></span>
+            <!-- Hamburger menu icon (only visible on mobile) -->
+            <div class="hamburger-menu">
+                <div class="bar1"></div>
+                <div class="bar2"></div>
+                <div class="bar3"></div>
+            </div>
+
+            <!-- Vertical line (hidden on mobile) -->
+            <span class="vertical-line desktop-only"></span>
 
             <!-- Navigation -->
             <nav class="main-nav">
@@ -27,16 +34,26 @@
             <span id="clock" class="header-clock"></span>
         </div>
     </div>
+    
+    <!-- Mobile sidebar navigation (hidden by default) -->
+    <div class="mobile-sidebar">
+        <div class="sidebar-header">
+            <div class="brand">
+                <img src="{% static 'svg/logo.svg' %}" alt="مِدَاد Logo" class="logo-svg" />
+                <span class="brand-text">مِدَاد</span>
+            </div>
+            <div class="close-btn">✕</div>
+        </div>
+        <ul class="sidebar-nav">
+            <li><a href="#">الرئيسية</a></li>
+            <li><a href="#">حول</a></li>
+            <li><a href="#">اقتراح</a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <span id="mobile-clock" class="header-clock"></span>
+        </div>
+    </div>
+    
+    <!-- Overlay for when sidebar is open -->
+    <div class="sidebar-overlay"></div>
 </header>
-
-<!-- Clock Script -->
-<script>
-    setInterval(() => {
-    const d = new Date();
-    const h = (d.getHours() % 12) || 12;
-    document.getElementById("clock").textContent =
-      ("0" + h).slice(-2) + ":" +
-      ("0" + d.getMinutes()).slice(-2) + ":" +
-      ("0" + d.getSeconds()).slice(-2);
-  }, 1000);
-</script>

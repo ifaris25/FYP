@@ -5,6 +5,13 @@
     const inputContainer = document.getElementById("inputContainer");
     const form = document.getElementById("myForm");
     const submitBtn = document.getElementById("submit-btn");
+    
+    // Mobile Navigation Elements
+    const hamburgerMenu = document.querySelector('.hamburger-menu');
+    const mobileSidebar = document.querySelector('.mobile-sidebar');
+    const sidebarOverlay = document.querySelector('.sidebar-overlay');
+    const closeBtn = document.querySelector('.close-btn');
+    const body = document.body;
 
     // Function to check input validity
     function checkValidity(value) {
@@ -13,7 +20,7 @@
             return "❌ يُسمح فقط بإدخال الحروف العربية!";
         }
         // Disallow Arabic numbers
-        if (value.match(/[\u0660-\u0669\s١۲۳٤٥٦٧۸٩۰]/)) {
+        if (value.match(/[\u0660-\u06FF١٢٣٤٥٦٧٨٩۰]/)) {
             return "❌ غير مسموح بإدخال الأرقام العربية!";
         }
         // Allow a maximum of 10 words
@@ -54,36 +61,49 @@
     }
 
     // Validate form on submission and show a loading spinner
-    form.addEventListener("submit", function (e) {
-        e.preventDefault();
-        const trimmedValue = inputField.value.trim();
-        if (trimmedValue === "") {
-            return;
-        }
+    if (form) {
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
+            const trimmedValue = inputField.value.trim();
+            if (trimmedValue === "") {
+                return;
+            }
 
-        const error = checkValidity(trimmedValue);
-        if (error) {
-            return;
-        }
+            const error = checkValidity(trimmedValue);
+            if (error) {
+                return;
+            }
 
-        submitBtn.querySelector('.btn-text').style.display = 'none';  // Hide text on button
-        submitBtn.querySelector('.spinner').style.display = 'inline-block';  // Show spinner
+            submitBtn.querySelector('.btn-text').style.display = 'none';  // Hide text on button
+            submitBtn.querySelector('.spinner').style.display = 'inline-block';  // Show spinner
 
-        // Submit form after a short delay (for spinner effect)
-        setTimeout(() => {
-            form.submit();
-        }, 1000);
-    });
+            // Submit form after a short delay (for spinner effect)
+            setTimeout(() => {
+                form.submit();
+            }, 1000);
+        });
+    }
     
     // Clock Script
-    setInterval(() => {
+    function updateClock() {
         const d = new Date();
         const h = (d.getHours() % 12) || 12;
-        document.getElementById("clock").textContent =
-          ("0" + h).slice(-2) + ":" +
-          ("0" + d.getMinutes()).slice(-2) + ":" +
-          ("0" + d.getSeconds()).slice(-2);
-      }, 1000);
+        const timeString = 
+            ("0" + h).slice(-2) + ":" +
+            ("0" + d.getMinutes()).slice(-2) + ":" +
+            ("0" + d.getSeconds()).slice(-2);
+        
+        // Update both clocks
+        const mainClock = document.getElementById("clock");
+        const mobileClock = document.getElementById("mobile-clock");
+        
+        if (mainClock) mainClock.textContent = timeString;
+        if (mobileClock) mobileClock.textContent = timeString;
+    }
+    
+    // Initialize and update clock
+    updateClock();
+    setInterval(updateClock, 1000);
 
     // Function to generate random Arabic text and trigger validation
     function generateRandomText() {
@@ -102,8 +122,23 @@
     // Expose the function to the global scope if needed
     window.generateRandomText = generateRandomText;
 
+    // Mobile Navigation Toggle
+    function toggleMobileMenu() {
+        hamburgerMenu.classList.toggle('active');
+        mobileSidebar.classList.toggle('active');
+        sidebarOverlay.classList.toggle('active');
+        body.classList.toggle('sidebar-open');
+    }
+    
+    // Add event listeners for mobile navigation
+    if (hamburgerMenu) hamburgerMenu.addEventListener('click', toggleMobileMenu);
+    if (closeBtn) closeBtn.addEventListener('click', toggleMobileMenu);
+    if (sidebarOverlay) sidebarOverlay.addEventListener('click', toggleMobileMenu);
+
     // Typewriter effect for the placeholder text
     document.addEventListener("DOMContentLoaded", function() {
+        if (!inputField) return;
+        
         const placeholderText = "اكتب النص...";  // Placeholder text
         let currentIndex = 0;
         inputField.placeholder = "";
@@ -139,6 +174,4 @@
             }
         });
     });
-
-    
 })();

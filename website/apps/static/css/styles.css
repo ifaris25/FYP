@@ -4,6 +4,7 @@
 html, body {
     margin: 0;
     padding: 0;
+    height: 100%;
 }
 
 body {
@@ -12,10 +13,13 @@ body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    min-height: 100vh;
     color: white;
     margin: 0;
     opacity: 0;
     animation: fadeIn 1s forwards ease-in-out;
+    display: flex;
+    flex-direction: column;
 }
 
 @keyframes fadeIn {
@@ -123,15 +127,152 @@ body {
 }
 
 /* ---------------------- */
+/* Responsive Navigation  */
+/* ---------------------- */
+
+/* Hamburger Menu */
+.hamburger-menu {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 21px;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+.hamburger-menu .bar1,
+.hamburger-menu .bar2,
+.hamburger-menu .bar3 {
+    width: 100%;
+    height: 3px;
+    background-color: white;
+    border-radius: 2px;
+    transition: 0.3s;
+}
+
+/* Desktop/Mobile specific elements */
+.desktop-only {
+    display: block;
+}
+
+/* Mobile Sidebar */
+.mobile-sidebar {
+    position: fixed;
+    top: 0;
+    right: -280px; /* Start off-screen */
+    width: 280px;
+    height: 100%;
+    background: #1a1a1a;
+    z-index: 10100;
+    transition: right 0.3s ease;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.close-btn {
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+}
+
+.sidebar-nav {
+    list-style: none;
+    padding: 20px;
+    margin: 0;
+    flex-grow: 1;
+}
+
+.sidebar-nav li {
+    margin-bottom: 15px;
+}
+
+.sidebar-nav a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    font-size: 20px;
+    display: block;
+    padding: 10px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.sidebar-nav a:hover {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-footer {
+    padding: 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    text-align: center;
+}
+
+/* Overlay for when sidebar is open */
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 10050;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+/* Active states for sidebar and overlay */
+.mobile-sidebar.active {
+    right: 0;
+}
+
+.sidebar-overlay.active {
+    display: block;
+    opacity: 1;
+}
+
+/* Hamburger menu animation when active */
+.hamburger-menu.active .bar1 {
+    transform: rotate(-45deg) translate(-5px, 6px);
+}
+
+.hamburger-menu.active .bar2 {
+    opacity: 0;
+}
+
+.hamburger-menu.active .bar3 {
+    transform: rotate(45deg) translate(-5px, -6px);
+}
+
+/* Body lock when sidebar is open */
+body.sidebar-open {
+    overflow: hidden;
+}
+
+/* ---------------------- */
 /* Container              */
 /* ---------------------- */
 .container {
-    margin-top: 100px;
-    margin-bottom: 100px;
+    padding-top: 100px;
+    padding-bottom: 40px;
     margin-left: auto;
     margin-right: auto;
     max-width: 1200px;
     text-align: center;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center content vertically */
 }
 
 /* Styling for headings & text */
@@ -149,70 +290,138 @@ p {
     color: #F4F4F485;
 }
 
-/* Buttons */
+/* Enhanced Button Styling */
 button {
     font-family: 'Almarai', sans-serif;
-    padding: 12px 64px;
+    padding: 14px 64px;
     border: none;
     border-radius: 12px;
-    background-color: #DDDDDD;
-    color: #1E1E1E;
+    background: linear-gradient(145deg, #3a1c71, #d76d77, #ffaf7b);
+    background-size: 200% 200%;
+    color: #ffffff;
     font-size: 24px;
     font-weight: 500;
     cursor: pointer;
     margin-top: 64px;
+    transition: all 0.4s ease;
+    box-shadow: 0 4px 15px rgba(215, 109, 119, 0.4), 0 0 20px rgba(255, 175, 123, 0.2);
+    position: relative;
+    overflow: hidden;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    animation: gradientShift 8s ease infinite;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 button:hover {
-    background-color: rgba(224, 224, 224, 0.856);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(215, 109, 119, 0.5), 0 0 30px rgba(255, 175, 123, 0.3);
+    letter-spacing: 0.5px;
 }
 
-/* Input Container */
+button:active {
+    transform: translateY(1px) scale(0.98);
+    box-shadow: 0 2px 8px rgba(215, 109, 119, 0.4);
+}
+
+button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: all 0.6s ease;
+}
+
+button:hover::before {
+    left: 100%;
+}
+
+/* Add subtle glow effect */
+@keyframes glow {
+    0% { box-shadow: 0 0 10px rgba(215, 109, 119, 0.4), 0 0 20px rgba(255, 175, 123, 0.2); }
+    50% { box-shadow: 0 0 20px rgba(215, 109, 119, 0.6), 0 0 30px rgba(255, 175, 123, 0.4); }
+    100% { box-shadow: 0 0 10px rgba(215, 109, 119, 0.4), 0 0 20px rgba(255, 175, 123, 0.2); }
+}
+
+button:hover {
+    animation: gradientShift 8s ease infinite, glow 2s ease-in-out infinite;
+}
+
+/* Input Container - Updated with consistent styling for both mobile and desktop */
 .input-container {
     position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between; 
     width: 798px;
-    background-color: #1E1E1E;
-    border-radius: 12px;
+    background: linear-gradient(145deg, #1c1c1c, #232323);
+    border-radius: 16px;
     padding: 0 20px;
     margin: 0 auto;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.input-container:focus-within {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.15);
 }
 
 .input-container i {
-    color: #F4F4F4;
+    color: #cccccc;
     font-size: 24px;
     cursor: pointer;
+    padding: 0 10px;
+    transition: color 0.3s ease;
+}
+
+.input-container i:hover {
+    color: #ffffff;
 }
 
 .input-container input {
     font-size: 18px;
-    padding: 24px 0;
+    padding: 22px 0;
     border: none;
     background: transparent;
     color: #F4F4F4;
     outline: none;
     flex: 1;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
 }
 
 .input-container input::placeholder {
     font-family: 'Almarai', sans-serif;
     color: #999;
+    transition: opacity 0.3s ease;
+}
+
+.input-container input:focus::placeholder {
+    opacity: 0.5;
 }
 
 /* Error Handling */
 .error-message {
     display: block;
     color: #ff8888;
-    margin-top: 8px;
+    margin-top: 10px;
     min-height: 24px;
     font-size: 16px;
+    transition: all 0.3s ease;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .input-container.error {
-    border: 2px solid #ff8888;
-    border-radius: 12px;
+    border: none;
+    box-shadow: 0 4px 15px rgba(255, 0, 0, 0.2), inset 0 0 0 2px #ff5555;
 }
 
 /* Spinner */
@@ -232,26 +441,38 @@ button:hover {
     to { transform: rotate(360deg); }
 }
 
-/* Footer (Fixed at bottom, transparent) */
+/* Footer (Position at end of page, not fixed) */
 .main-footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
+    position: relative;
     width: 100%;
-    z-index: 9999;
-    padding: 10px 0;
-    background: transparent;
+    z-index: 500;
+    padding: 20px 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.3), transparent);
     direction: rtl;
     text-align: center;
     border-top: none;
+    margin-top: auto;
+    transition: all 0.3s ease;
 }
 
 /* Horizontal line in footer */
 .footer-line {
     width: 500px; 
     height: 1px;
-    margin: 10px auto;
-    background: linear-gradient(to right, rgba(255,255,255,0.05), rgba(255,255,255,0.8), rgba(255,255,255,0.05));
+    margin: 15px auto;
+    background: linear-gradient(to right, 
+        rgba(255,255,255,0.05), 
+        rgba(255,255,255,0.8), 
+        rgba(255,255,255,0.05));
+    transition: width 0.3s ease, background 0.3s ease;
+}
+
+.main-footer:hover .footer-line {
+    width: 400px;
+    background: linear-gradient(to right, 
+        rgba(255,255,255,0), 
+        rgba(255,255,255,0.9), 
+        rgba(255,255,255,0));
 }
 
 /* Footer text */
@@ -260,30 +481,86 @@ button:hover {
     color: #999;
     margin: 0;
     direction: rtl;
+    transition: color 0.3s ease;
+}
+
+.main-footer:hover .footer-text {
+    color: #bbb;
 }
 
 /* Responsiveness for smaller screens */
 @media (max-width: 768px) {
+    /* Show hamburger, hide desktop nav */
+    .hamburger-menu {
+        display: flex;
+    }
+    
+    .main-nav {
+        display: none;
+    }
+    
+    .desktop-only {
+        display: none;
+    }
+    
+    /* Adjust header layout */
     .header-container {
         width: 95%;
     }
-    .brand-text {
-        font-size: 24px;
+    
+    .header-left {
+        display: none; /* Hide clock on mobile, will show in sidebar */
     }
-    .main-nav a {
-        font-size: 16px;
+    
+    .header-right {
+        width: 100%;
+        justify-content: space-between;
     }
+    
+    /* Adjust mobile input container */
     .input-container {
         width: 90%;
+        margin: 0 auto;
     }
+    
+    .input-container input {
+        font-size: 16px;
+        padding: 18px 0;
+    }
+    
+    .input-container i {
+        font-size: 20px;
+    }
+    
     h1 {
         font-size: 32px;
+        margin-bottom: 16px;
     }
+    
     p {
         font-size: 18px;
+        margin-bottom: 40px;
     }
+    
+    /* Mobile button styles */
     button {
+        padding: 12px 36px;
         font-size: 20px;
-        padding: 12px 32px;
+        margin-top: 40px;
+    }
+    
+    /* Footer responsiveness */
+    .footer-line {
+        width: 80%;
+        max-width: 300px;
+    }
+    
+    .main-footer:hover .footer-line {
+        width: 70%;
+    }
+    
+    .footer-text {
+        font-size: 12px;
+        padding: 0 15px;
     }
 }
