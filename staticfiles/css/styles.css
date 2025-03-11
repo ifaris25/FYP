@@ -9,7 +9,7 @@ html, body {
 
 body {
     font-family: 'Almarai', sans-serif;
-    background-image: url("../img/Gradient 5.png");
+    background-image: url("/static/img/Gradient.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
