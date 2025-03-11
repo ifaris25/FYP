@@ -1,0 +1,102 @@
+/* ---------------------- */
+/* Body and Fade-In       */
+/* ---------------------- */
+body {
+    font-family: 'Almarai', sans-serif;
+    background-image: url("../img/Gradient 5.png");
+    background-size: cover;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    opacity: 0;
+    animation: fadeIn 1s forwards ease-in-out;
+}
+
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+
+/* ---------------------- */
+/* Container & Typography */
+/* ---------------------- */
+.container {
+    text-align: center;
+    margin-bottom: 64px;
+}
+
+h1 {
+    font-size: 32px;
+    margin: 0;
+    padding: 0;
+    color: #F4F4F4;
+}
+
+.result-box {
+    margin: 20px 0;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+}
+
+h3 {
+    font-size: 48px;
+    margin: 0;
+    padding: 0;
+    color: #F4F4F4;
+}
+
+/* ---------------------- */
+/* Logo and Button        */
+/* ---------------------- */
+.logo {
+    position: absolute;
+    top: 32px;
+    right: 120px;
+    color: #FEFEFE;
+    font-size: 20px;
+    text-decoration: none;
+}
+
+.btn {
+    display: inline-block;
+    background: rgba(224, 224, 224, 0.856);
+    color: #1E1E1E;
+    text-decoration: none;
+    padding: 12px 64px;
+    border-radius: 8px;
+    font-size: 24px;
+    margin-top: 64px;
+    transition: background 0.3s ease;
+}
+
+.btn:hover {
+    background: #FEFEFE;
+}
+
+/* ---------------------- */
+/* Responsiveness         */
+/* ---------------------- */
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+        margin: 0 auto;
+    }
+    h1 {
+        font-size: 28px;
+    }
+    h3 {
+        font-size: 32px;
+    }
+    .btn {
+        font-size: 20px;
+        padding: 12px 32px;
+    }
+    .logo {
+        right: 32px;
+        font-size: 16px;
+    }
+}
